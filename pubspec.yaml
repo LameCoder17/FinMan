@@ -21,6 +21,10 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  font_awesome_flutter: ^9.0.0
+  sqflite: ^2.0.0  #sqflite package
+  flutter_simple_dependency_injection: ^1.0.4 #to perform dependency injection
+  path_provider: ^2.0.1 #helper package used by database helper class to get the database file
   flutter:
     sdk: flutter
 

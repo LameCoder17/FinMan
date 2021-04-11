@@ -1,6 +1,9 @@
 import 'package:finman/billSplit.dart';
 import 'package:finman/expenses.dart';
+import 'package:finman/passwords.dart';
+import 'package:finman/reminders.dart';
 import 'package:flutter/material.dart';
+import 'loans.dart';
 
 class MyDrawer extends StatelessWidget{
   @override
@@ -60,7 +63,13 @@ class MyDrawer extends StatelessWidget{
                           color: Color(0xFFF7F1E3)
                       ),
                     ),
-                    onTap: null
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (BuildContext context){
+                            return Reminders();
+                          }
+                      ));
+                    }
                 ),
               ),
               Padding(
@@ -73,7 +82,13 @@ class MyDrawer extends StatelessWidget{
                           color: Color(0xFFF7F1E3)
                       ),
                     ),
-                    onTap: null
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (BuildContext context){
+                            return Loans();
+                          }
+                      ));
+                    }
                 ),
               ),
               Padding(
@@ -86,7 +101,13 @@ class MyDrawer extends StatelessWidget{
                           color: Color(0xFFF7F1E3)
                       ),
                     ),
-                    onTap: null
+                    onTap: (){
+                      Navigator.push(context, MaterialPageRoute(
+                          builder: (BuildContext context){
+                            return Passwords();
+                          }
+                      ));
+                    }
                 ),
               )
             ],

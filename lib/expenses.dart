@@ -18,6 +18,7 @@ class _ExpensesState extends State<Expenses> {
   Expense e = Expense('',0);
   int total;
   int count = 0;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -125,38 +126,59 @@ class _ExpensesState extends State<Expenses> {
           insetPadding: EdgeInsets.only(top: height*0.33, left: width*0.25, right: width*0.25, bottom: height*0.33),
           content: Column(
             children: [
-              TextField(
-                style: TextStyle(color: Color(0xFFF7F1E3)),
-                    decoration: InputDecoration(
-                        labelText: 'Reason',
-                    labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
-                    onChanged: (value) {
-                      print(value);
-                      e.description = value;
-                    },
-                  ),
-              TextField(
-                keyboardType: TextInputType.number,
-                    style: TextStyle(color: Color(0xFFF7F1E3)),
-                    decoration: InputDecoration(
-                        labelText: 'Money',
-                    labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
-                    onChanged: (value) {
-                      if(action == 'Add Money'){
-                        e.money = int.parse(value);
-                      }
-                      else{
-                        e.money = -int.parse(value);
-                      }
-                    },
-                  )
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    TextFormField(
+                      style: TextStyle(color: Color(0xFFF7F1E3)),
+                      validator: (value){
+                        if(value.isEmpty){
+                          return 'Enter Reason';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
+                          labelText: 'Reason',
+                          labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
+                      onChanged: (value) {
+                        print(value);
+                        e.description = value;
+                      },
+                    ),
+                    TextFormField(
+                      keyboardType: TextInputType.number,
+                      validator: (value){
+                        if(value.isEmpty){
+                          return 'Enter amount of money';
+                        }
+                        return null;
+                      },
+                      style: TextStyle(color: Color(0xFFF7F1E3)),
+                      decoration: InputDecoration(
+                          labelText: 'Money',
+                          labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
+                      onChanged: (value) {
+                        if(action == 'Add Money'){
+                          e.money = int.parse(value);
+                        }
+                        else{
+                          e.money = -int.parse(value);
+                        }
+                      },
+                    )
+                  ],
+                ),
+              )
             ],
           ),
           actions: [
             TextButton(
               child: Text('Ok',  style: TextStyle(color: Color(0xFFF7F1E3), fontSize: 22.0)),
               onPressed: () {
+                if(_formKey.currentState.validate()){
                   _save();
+                }
                 },
             ),
           ],
@@ -168,9 +190,6 @@ class _ExpensesState extends State<Expenses> {
   void _save() async {
     int result = 0;
 
-    if(e.money == 0){
-      Navigator.of(context).pop();
-    }
     result = await helper.insertExpense(e);
 
     if(result != 0) {

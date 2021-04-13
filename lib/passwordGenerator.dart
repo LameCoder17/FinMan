@@ -67,7 +67,7 @@ class PasswordGeneratorState extends State<PasswordGenerator> {
             icon: Icon(Icons.assignment),
             tooltip: "Copy",
             onPressed: () {
-              final snackBar = SnackBar(content: Text('Copied'));
+              final snackBar = SnackBar(content: Text('Copied to clipboard'));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
               Clipboard.setData(new ClipboardData(text: _generator.getGeneratedValue()));
             },
@@ -143,6 +143,9 @@ class PasswordGeneratorState extends State<PasswordGenerator> {
                 ),
               )
             ],
+          ),
+          SizedBox(
+            height: height*0.05
           )
         ],
       ),

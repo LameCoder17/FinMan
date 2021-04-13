@@ -22,6 +22,7 @@ class _PasswordsState extends State<Passwords> {
   List<Password> passwordList;
   Password p = Password('','','');
   int count = 0;
+  final _formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -87,50 +88,73 @@ class _PasswordsState extends State<Passwords> {
           title: Text('Store Password', style: TextStyle(color: Color(0xFFF7F1E3)),),
           backgroundColor: Color(0xFF40407A),
           insetPadding: EdgeInsets.only(top: height*0.25, left: width*0.25, right: width*0.25, bottom: height*0.25),
-          content: Column(
-            children: [
-              Padding(
-                  padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                  child: TextField(
-                    style: TextStyle(color: Color(0xFFF7F1E3)),
-                    decoration: InputDecoration(
+          content: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Padding(
+                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                    child: TextFormField(
+                      style: TextStyle(color: Color(0xFFF7F1E3)),
+                      validator: (value){
+                        if(value.isEmpty){
+                          return 'Enter title';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
                         labelText: 'Title',
-                    labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                    onChanged: (value) {
-                      print(value);
-                      p.title = value;
-                    },
-                  )),
-              Padding(
-                  padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                  child: TextField(
-                    style: TextStyle(color: Color(0xFFF7F1E3)),
-                    decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                      onChanged: (value) {
+                        print(value);
+                        p.title = value;
+                      },
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                    child: TextFormField(
+                      style: TextStyle(color: Color(0xFFF7F1E3)),
+                      validator: (value){
+                        if(value.isEmpty){
+                          return 'Enter email';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
                         labelText: 'Email ID',
-        labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                    onChanged: (value) {
-                      print(value);
-                      p.emailID = value;
-                    },
-                  )),
-              Padding(
-                  padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                  child: TextField(
-                    style: TextStyle(color: Color(0xFFF7F1E3)),
-                    decoration: InputDecoration(
+                        labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                      onChanged: (value) {
+                        print(value);
+                        p.emailID = value;
+                      },
+                    )),
+                Padding(
+                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                    child: TextFormField(
+                      style: TextStyle(color: Color(0xFFF7F1E3)),
+                      validator: (value){
+                        if(value.isEmpty){
+                          return 'Enter password';
+                        }
+                        return null;
+                      },
+                      decoration: InputDecoration(
                         labelText: 'Password',
-                    labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                    onChanged: (value) {
-                      p.password = value;
-                    },
-                  ))
-            ],
+                        labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                      onChanged: (value) {
+                        p.password = value;
+                      },
+                    ))
+              ],
+            ),
           ),
           actions: [
             TextButton(
               child: Text('Save', style: TextStyle(color: Color(0xFFF7F1E3), fontSize: 22.0),),
               onPressed: () {
-                _save();
+                if(_formKey.currentState.validate()){
+                  _save();
+                }
               },
             ),
           ],
@@ -141,11 +165,6 @@ class _PasswordsState extends State<Passwords> {
 
   void _save() async {
     int result = 0;
-
-    if(p.title == ''){
-      _displaySnackBar('Empty title');
-      Navigator.of(context).pop();
-    }
 
     result = await helper.insertPassword(p);
     if(result != 0) {

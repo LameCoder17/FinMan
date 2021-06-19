@@ -35,6 +35,7 @@ class _LoansState extends State<Loans> {
     }
     return Scaffold(
       backgroundColor: Color(0xFF474787),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'Loans',
@@ -65,9 +66,11 @@ class _LoansState extends State<Loans> {
                           fontSize: 24.0, color: Color(0xFFF7F1E3), fontWeight: FontWeight.w600),
                     ),
                   ),
+                  Expanded(
+                    child:
                   SizedBox(
-                    width: width*0.3,
-                  ),
+                    width: width
+                  )),
                   Padding(
                     padding: EdgeInsets.only(
                         top: 10.0, left: 20.0, right: 20.0, bottom: 15.0),
@@ -107,87 +110,89 @@ class _LoansState extends State<Loans> {
         return AlertDialog(
           backgroundColor: Color(0xFF40407A),
           title: Text('Add Loan', style: TextStyle(color: Color(0xFFF7F1E3)),),
-          insetPadding: EdgeInsets.only(top: height*0.2, left: width*0.25, right: width*0.25, bottom: height*0.2),
+          insetPadding: EdgeInsets.only(left: width*0.25, right: width*0.25),
           content: StatefulBuilder(
             builder: (BuildContext context, StateSetter setState){
-              return Form(
-                key: _formKey,
-                  child: Column(
-                    children: [
-                      Padding(
-                          padding: EdgeInsets.only(left: 15.0, right: 15.0),
-                          child: TextFormField(
-                            style: TextStyle(color: Color(0xFFF7F1E3)),
-                            validator: (value){
-                              if(value.isEmpty){
-                                return 'Enter name';
-                              }
-                              return null;
+              return SingleChildScrollView(
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        Padding(
+                            padding: EdgeInsets.only(left: 15.0, right: 15.0),
+                            child: TextFormField(
+                              style: TextStyle(color: Color(0xFFF7F1E3)),
+                              validator: (value){
+                                if(value.isEmpty){
+                                  return 'Enter name';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Name',
+                                labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                              onChanged: (value) {
+                                print(value);
+                                l.name = value;
+                              },
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                            child: TextFormField(
+                              style: TextStyle(color: Color(0xFFF7F1E3)),
+                              validator: (value){
+                                if(value.isEmpty){
+                                  return 'Enter description';
+                                }
+                                return null;
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Description',
+                                labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                              onChanged: (value) {
+                                print(value);
+                                l.description = value;
+                              },
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                            child: TextFormField(
+                              keyboardType: TextInputType.number,
+                              validator: (value){
+                                if(value.isEmpty){
+                                  return 'Enter cost';
+                                }
+                                return null;
+                              },
+                              style: TextStyle(color: Color(0xFFF7F1E3)),
+                              decoration: InputDecoration(
+                                labelText: 'Cost',
+                                labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                              onChanged: (value) {
+                                l.cost = int.parse(value);
+                              },
+                            )),
+                        Padding(
+                          padding: EdgeInsets.only(top: 15.0),
+                          child: DropdownButton(
+                            dropdownColor: Color(0xFF40407A),
+                            hint: _sel == null
+                                ? Text('Choose', style: TextStyle(color: Color(0xFFF7F1E3)),)
+                                : Text(_sel, style: TextStyle(color: Color(0xFFF7F1E3)),),
+                            items: theList.map((e){
+                              return DropdownMenuItem<String>(
+                                value: e,
+                                child: Text(e, style: TextStyle(color: Color(0xFFF7F1E3)),),
+                              );
+                            },).toList(),
+                            onChanged: (val){
+                              setState(() {
+                                _sel = val;
+                              });
                             },
-                            decoration: InputDecoration(
-                              labelText: 'Name',
-                              labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                            onChanged: (value) {
-                              print(value);
-                              l.name = value;
-                            },
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                          child: TextFormField(
-                            style: TextStyle(color: Color(0xFFF7F1E3)),
-                            validator: (value){
-                              if(value.isEmpty){
-                                return 'Enter description';
-                              }
-                              return null;
-                            },
-                            decoration: InputDecoration(
-                              labelText: 'Description',
-                              labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                            onChanged: (value) {
-                              print(value);
-                              l.description = value;
-                            },
-                          )),
-                      Padding(
-                          padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                          child: TextFormField(
-                            keyboardType: TextInputType.number,
-                            validator: (value){
-                              if(value.isEmpty){
-                                return 'Enter cost';
-                              }
-                              return null;
-                            },
-                            style: TextStyle(color: Color(0xFFF7F1E3)),
-                            decoration: InputDecoration(
-                              labelText: 'Cost',
-                              labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                            onChanged: (value) {
-                              l.cost = int.parse(value);
-                            },
-                          )),
-                      Padding(
-                        padding: EdgeInsets.only(top: 15.0),
-                        child: DropdownButton(
-                          dropdownColor: Color(0xFF40407A),
-                          hint: _sel == null
-                              ? Text('Choose', style: TextStyle(color: Color(0xFFF7F1E3)),)
-                              : Text(_sel, style: TextStyle(color: Color(0xFFF7F1E3)),),
-                          items: theList.map((e){
-                            return DropdownMenuItem<String>(
-                              value: e,
-                              child: Text(e, style: TextStyle(color: Color(0xFFF7F1E3)),),
-                            );
-                          },).toList(),
-                          onChanged: (val){
-                            setState(() {
-                              _sel = val;
-                            });
-                          },
-                        ),)],
-                  )
+                          ),)],
+                    )
+                ),
               );
             },
           ),

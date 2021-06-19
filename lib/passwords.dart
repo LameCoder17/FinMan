@@ -87,65 +87,67 @@ class _PasswordsState extends State<Passwords> {
         return AlertDialog(
           title: Text('Store Password', style: TextStyle(color: Color(0xFFF7F1E3)),),
           backgroundColor: Color(0xFF40407A),
-          insetPadding: EdgeInsets.only(top: height*0.25, left: width*0.25, right: width*0.25, bottom: height*0.25),
-          content: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                    child: TextFormField(
-                      style: TextStyle(color: Color(0xFFF7F1E3)),
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'Enter title';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Title',
-                        labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                      onChanged: (value) {
-                        print(value);
-                        p.title = value;
-                      },
-                    )),
-                Padding(
-                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                    child: TextFormField(
-                      style: TextStyle(color: Color(0xFFF7F1E3)),
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'Enter email';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Email ID',
-                        labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                      onChanged: (value) {
-                        print(value);
-                        p.emailID = value;
-                      },
-                    )),
-                Padding(
-                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                    child: TextFormField(
-                      style: TextStyle(color: Color(0xFFF7F1E3)),
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'Enter password';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                        labelText: 'Password',
-                        labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
-                      onChanged: (value) {
-                        p.password = value;
-                      },
-                    ))
-              ],
+          insetPadding: EdgeInsets.only(left: width*0.25, right: width*0.25),
+          content: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                      child: TextFormField(
+                        style: TextStyle(color: Color(0xFFF7F1E3)),
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'Enter title';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Title',
+                          labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                        onChanged: (value) {
+                          print(value);
+                          p.title = value;
+                        },
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                      child: TextFormField(
+                        style: TextStyle(color: Color(0xFFF7F1E3)),
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'Enter email';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Email ID',
+                          labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                        onChanged: (value) {
+                          print(value);
+                          p.emailID = value;
+                        },
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                      child: TextFormField(
+                        style: TextStyle(color: Color(0xFFF7F1E3)),
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'Enter password';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Password',
+                          labelStyle: TextStyle(color: Color(0xFFF7F1E3)),),
+                        onChanged: (value) {
+                          p.password = value;
+                        },
+                      ))
+                ],
+              ),
             ),
           ),
           actions: [

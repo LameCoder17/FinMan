@@ -30,6 +30,7 @@ class _RemindersState extends State<Reminders> {
     }
     return Scaffold(
       backgroundColor: Color(0xFF474787),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'Reminders',
@@ -67,66 +68,68 @@ class _RemindersState extends State<Reminders> {
         return AlertDialog(
           title: Text('Add Reminder', style: TextStyle(color: Color(0xFFF7F1E3)),),
           backgroundColor: Color(0xFF40407A),
-          insetPadding: EdgeInsets.only(top: height*0.25, left: width*0.25, right: width*0.25, bottom: height*0.25),
-          content: Form(
-            key: _formKey,
-            child: Column(
-              children: [
-                Padding(
-                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                    child: TextFormField(
-                      style: TextStyle(color: Color(0xFFF7F1E3)),
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'Enter title';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          labelText: 'Title',
-                          labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
-                      onChanged: (value) {
-                        print(value);
-                        r.title = value;
-                      },
-                    )),
-                Padding(
-                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                    child: TextFormField(
-                      style: TextStyle(color: Color(0xFFF7F1E3)),
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'Enter description';
-                        }
-                        return null;
-                      },
-                      decoration: InputDecoration(
-                          labelText: 'Description',
-                          labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
-                      onChanged: (value) {
-                        print(value);
-                        r.description = value;
-                      },
-                    )),
-                Padding(
-                    padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
-                    child: TextFormField(
-                      style: TextStyle(color: Color(0xFFF7F1E3)),
-                      validator: (value){
-                        if(value.isEmpty){
-                          return 'Enter cost';
-                        }
-                        return null;
-                      },
-                      keyboardType: TextInputType.number,
-                      decoration: InputDecoration(
-                          labelText: 'Cost',
-                          labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
-                      onChanged: (value) {
-                        r.cost = int.parse(value);
-                      },
-                    ))
-              ],
+          insetPadding: EdgeInsets.only(left: width*0.25, right: width*0.25),
+          content: SingleChildScrollView(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  Padding(
+                      padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                      child: TextFormField(
+                        style: TextStyle(color: Color(0xFFF7F1E3)),
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'Enter title';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'Title',
+                            labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
+                        onChanged: (value) {
+                          print(value);
+                          r.title = value;
+                        },
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                      child: TextFormField(
+                        style: TextStyle(color: Color(0xFFF7F1E3)),
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'Enter description';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                            labelText: 'Description',
+                            labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
+                        onChanged: (value) {
+                          print(value);
+                          r.description = value;
+                        },
+                      )),
+                  Padding(
+                      padding: EdgeInsets.only(top: 15.0, left: 15.0, right: 15.0),
+                      child: TextFormField(
+                        style: TextStyle(color: Color(0xFFF7F1E3)),
+                        validator: (value){
+                          if(value.isEmpty){
+                            return 'Enter cost';
+                          }
+                          return null;
+                        },
+                        keyboardType: TextInputType.number,
+                        decoration: InputDecoration(
+                            labelText: 'Cost',
+                            labelStyle: TextStyle(color: Color(0xFFF7F1E3))),
+                        onChanged: (value) {
+                          r.cost = int.parse(value);
+                        },
+                      ))
+                ],
+              ),
             ),
           ),
           actions: [

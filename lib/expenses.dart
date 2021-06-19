@@ -30,6 +30,7 @@ class _ExpensesState extends State<Expenses> {
     }
     return Scaffold(
       backgroundColor: Color(0xFF474787),
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Text(
           'Expenses',
@@ -43,7 +44,7 @@ class _ExpensesState extends State<Expenses> {
       body: ListView(
         children: [
           Padding(
-            padding: EdgeInsets.only(top: height * 0.1, left: 40.0, right: 40.0),
+            padding: EdgeInsets.only(top: height * 0.1, left: width*0.05, right: width*0.05),
             child: Container(
               decoration: BoxDecoration(
                   color: Color(0xFF706FD3),
@@ -54,7 +55,7 @@ class _ExpensesState extends State<Expenses> {
                     children: [
                       Padding(
                         padding: EdgeInsets.only(
-                            top: 10.0, left: 20.0, right: 20.0, bottom: 15.0),
+                            top: 10.0, left: 15.0, right: 20.0, bottom: 15.0),
                         child: Text(
                           'Total',
                           style: TextStyle(
@@ -72,22 +73,22 @@ class _ExpensesState extends State<Expenses> {
                       )
                     ],
                   ),
+                  Expanded(
+                  child:
                   SizedBox(
-                    width: width * 0.45,
-                  ),
-                  Column(
+                    width: width,
+                  )),
+                  Expanded(
+                    child:  Column(
                     children: [
-                      Padding(
-                          padding:
-                              EdgeInsets.only(left: 5.0, right: 5.0),
-                          child: GestureDetector(
+                      GestureDetector(
                             child: Icon(FontAwesomeIcons.plus,
                             color: Color(0xFF33D9B2)),
                             onTap: (){
                               debugPrint('Plus');
                               _moneyDialog(context, 'Add Money');
                             },
-                          )),
+                          ),
                       Padding(
                           padding:
                               EdgeInsets.only(top: 30.0, left: 5.0, right: 5.0),
@@ -100,7 +101,7 @@ class _ExpensesState extends State<Expenses> {
                             },
                           )),
                     ],
-                  )
+                  ))
                 ],
               ),
             ),
@@ -123,8 +124,9 @@ class _ExpensesState extends State<Expenses> {
         return AlertDialog(
           title: Text(action, style: TextStyle(color: Color(0xFFF7F1E3)),),
           backgroundColor: Color(0xFF40407A),
-          insetPadding: EdgeInsets.only(top: height*0.33, left: width*0.25, right: width*0.25, bottom: height*0.33),
-          content: Column(
+          insetPadding: EdgeInsets.only(left: width*0.25, right: width*0.25),
+          content: SingleChildScrollView(
+              child: Column(
             children: [
               Form(
                 key: _formKey,
@@ -171,7 +173,7 @@ class _ExpensesState extends State<Expenses> {
                 ),
               )
             ],
-          ),
+          )),
           actions: [
             TextButton(
               child: Text('Ok',  style: TextStyle(color: Color(0xFFF7F1E3), fontSize: 22.0)),
